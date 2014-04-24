@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.ProvinceInfoDao">  
+    
+    <resultMap type="ProvinceInfo" id="ProvinceInfoResultMap">  
+		<id 		property="id" column="id"/>
+		<result 	property="name" column="name"/>
+		<result 	property="isLeaf" column="is_leaf"/>
+		<result 	property="carFrameNo" column="car_frame_no"/>
+		<result 	property="carEngineNo" column="car_engine_no"/>
+		<result 	property="carRegisterNo" column="car_register_no"/>
+		 
+    </resultMap>
+    
+    <select id="findByPK"  resultType="ProvinceInfo" resultMap="ProvinceInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,name,is_leaf,car_frame_no,car_engine_no,car_register_no FROM province_info WHERE id = #{id}        	
+        ]]>   
+    </select>
+    
+    <select id="findOneByAttr" resultType="ProvinceInfo" resultMap="ProvinceInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,name,is_leaf,car_frame_no,car_engine_no,car_register_no FROM province_info WHERE `${fieldName}` = #{value} limit 1        	
+        ]]>
+    </select>
+    
+    <select id="findByAttr" resultType="ProvinceInfo" resultMap="ProvinceInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,name,is_leaf,car_frame_no,car_engine_no,car_register_no FROM province_info WHERE `${fieldName}` = #{value}        	
+        ]]>
+    </select>
+    
+    <select id="findOne" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="ProvinceInfo" resultMap="ProvinceInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,name,is_leaf,car_frame_no,car_engine_no,car_register_no FROM province_info WHERE ${uniqueWhereCond}        	
+        ]]>
+    </select>
+    
+    <select id="findMap" parameterType="com.ecarinfo.persist.criteria.Criteria" resultMap="ProvinceInfoResultMap">  
+        <![CDATA[ 
+		    SELECT id,name,is_leaf,car_frame_no,car_engine_no,car_register_no FROM province_info WHERE ${whereCond}
+        ]]>
+    </select>
+    
+    <select id="findAll" resultType="ProvinceInfo" resultMap="ProvinceInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,name,is_leaf,car_frame_no,car_engine_no,car_register_no FROM province_info        	
+        ]]>
+    </select>
+    
+    <select id="findList" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="ProvinceInfo" resultMap="ProvinceInfoResultMap">  
+        <![CDATA[ 
+      	 	SELECT id,name,is_leaf,car_frame_no,car_engine_no,car_register_no FROM province_info WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <select id="count" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[ 
+      	 	SELECT COUNT(id) FROM province_info WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <insert id="insert" parameterType="ProvinceInfo">
+    	<![CDATA[ 
+    		INSERT INTO province_info(name,is_leaf,car_frame_no,car_engine_no,car_register_no) VALUES (#{name},#{isLeaf},#{carFrameNo},#{carEngineNo},#{carRegisterNo})    		
+        ]]> 
+        <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+    </insert>
+	
+	<update id="updateWithCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+		UPDATE province_info SET ${updateField} WHERE ${whereCond}	
+		]]> 	
+	</update>
+	
+	<update id="update" parameterType="ProvinceInfo">
+		<![CDATA[ 
+			UPDATE province_info SET name = #{name},is_leaf = #{isLeaf},car_frame_no = #{carFrameNo},car_engine_no = #{carEngineNo},car_register_no = #{carRegisterNo} WHERE id = #{id}
+		]]> 	
+	</update>
+	
+	<delete id="deleteEntity" parameterType="ProvinceInfo">
+		<![CDATA[ 
+    		DELETE FROM province_info WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="deleteByPK" parameterType="Integer">
+		<![CDATA[ 
+    		DELETE FROM province_info WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="delete" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+    		DELETE FROM province_info WHERE ${whereCond}     		
+        ]]> 
+	</delete>
+	
+</mapper>  

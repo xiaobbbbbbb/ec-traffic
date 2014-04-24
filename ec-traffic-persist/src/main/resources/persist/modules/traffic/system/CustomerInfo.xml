@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.CustomerInfoDao">  
+    
+    <resultMap type="CustomerInfo" id="CustomerInfoResultMap">  
+		<id 		property="id" column="id"/>
+		<result 	property="code" column="code"/>
+		<result 	property="authCode" column="auth_code"/>
+		<result 	property="name" column="name"/>
+		<result 	property="cityId" column="city_id"/>
+		<result 	property="cityPid" column="city_pid"/>
+		<result 	property="startDate" column="start_date"/>
+		<result 	property="endDate" column="end_date"/>
+		<result 	property="carNums" column="car_nums"/>
+		<result 	property="carAllowchangeNums" column="car_allowchange_nums"/>
+		<result 	property="carFixedNums" column="car_fixed_nums"/>
+		<result 	property="type" column="type"/>
+		<result 	property="isValid" column="is_valid"/>
+		<result 	property="isExpired" column="is_expired"/>
+		<result 	property="opName" column="op_name"/>
+		<result 	property="ctime" column="ctime"/>
+		<result 	property="updateTime" column="update_time"/>
+		<result 	property="url" column="url"/>
+		 
+    </resultMap>
+    
+    <select id="findByPK"  resultType="CustomerInfo" resultMap="CustomerInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,code,auth_code,name,city_id,city_pid,start_date,end_date,car_nums,car_allowchange_nums,car_fixed_nums,type,is_valid,is_expired,op_name,ctime,update_time,url FROM customer_info WHERE id = #{id}        	
+        ]]>   
+    </select>
+    
+    <select id="findOneByAttr" resultType="CustomerInfo" resultMap="CustomerInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,code,auth_code,name,city_id,city_pid,start_date,end_date,car_nums,car_allowchange_nums,car_fixed_nums,type,is_valid,is_expired,op_name,ctime,update_time,url FROM customer_info WHERE `${fieldName}` = #{value} limit 1        	
+        ]]>
+    </select>
+    
+    <select id="findByAttr" resultType="CustomerInfo" resultMap="CustomerInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,code,auth_code,name,city_id,city_pid,start_date,end_date,car_nums,car_allowchange_nums,car_fixed_nums,type,is_valid,is_expired,op_name,ctime,update_time,url FROM customer_info WHERE `${fieldName}` = #{value}        	
+        ]]>
+    </select>
+    
+    <select id="findOne" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="CustomerInfo" resultMap="CustomerInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,code,auth_code,name,city_id,city_pid,start_date,end_date,car_nums,car_allowchange_nums,car_fixed_nums,type,is_valid,is_expired,op_name,ctime,update_time,url FROM customer_info WHERE ${uniqueWhereCond}        	
+        ]]>
+    </select>
+    
+    <select id="findMap" parameterType="com.ecarinfo.persist.criteria.Criteria" resultMap="CustomerInfoResultMap">  
+        <![CDATA[ 
+		    SELECT id,code,auth_code,name,city_id,city_pid,start_date,end_date,car_nums,car_allowchange_nums,car_fixed_nums,type,is_valid,is_expired,op_name,ctime,update_time,url FROM customer_info WHERE ${whereCond}
+        ]]>
+    </select>
+    
+    <select id="findAll" resultType="CustomerInfo" resultMap="CustomerInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,code,auth_code,name,city_id,city_pid,start_date,end_date,car_nums,car_allowchange_nums,car_fixed_nums,type,is_valid,is_expired,op_name,ctime,update_time,url FROM customer_info        	
+        ]]>
+    </select>
+    
+    <select id="findList" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="CustomerInfo" resultMap="CustomerInfoResultMap">  
+        <![CDATA[ 
+      	 	SELECT id,code,auth_code,name,city_id,city_pid,start_date,end_date,car_nums,car_allowchange_nums,car_fixed_nums,type,is_valid,is_expired,op_name,ctime,update_time,url FROM customer_info WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <select id="count" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[ 
+      	 	SELECT COUNT(id) FROM customer_info WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <insert id="insert" parameterType="CustomerInfo">
+    	<![CDATA[ 
+    		INSERT INTO customer_info(code,auth_code,name,city_id,city_pid,start_date,end_date,car_nums,car_allowchange_nums,car_fixed_nums,type,is_valid,is_expired,op_name,ctime,update_time,url) VALUES (#{code},#{authCode},#{name},#{cityId},#{cityPid},#{startDate},#{endDate},#{carNums},#{carAllowchangeNums},#{carFixedNums},#{type},#{isValid},#{isExpired},#{opName},#{ctime},#{updateTime},#{url})    		
+        ]]> 
+        <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+    </insert>
+	
+	<update id="updateWithCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+		UPDATE customer_info SET ${updateField} WHERE ${whereCond}	
+		]]> 	
+	</update>
+	
+	<update id="update" parameterType="CustomerInfo">
+		<![CDATA[ 
+			UPDATE customer_info SET code = #{code},auth_code = #{authCode},name = #{name},city_id = #{cityId},city_pid = #{cityPid},start_date = #{startDate},end_date = #{endDate},car_nums = #{carNums},car_allowchange_nums = #{carAllowchangeNums},car_fixed_nums = #{carFixedNums},type = #{type},is_valid = #{isValid},is_expired = #{isExpired},op_name = #{opName},ctime = #{ctime},update_time = #{updateTime},url = #{url} WHERE id = #{id}
+		]]> 	
+	</update>
+	
+	<delete id="deleteEntity" parameterType="CustomerInfo">
+		<![CDATA[ 
+    		DELETE FROM customer_info WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="deleteByPK" parameterType="Integer">
+		<![CDATA[ 
+    		DELETE FROM customer_info WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="delete" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+    		DELETE FROM customer_info WHERE ${whereCond}     		
+        ]]> 
+	</delete>
+	
+</mapper>  

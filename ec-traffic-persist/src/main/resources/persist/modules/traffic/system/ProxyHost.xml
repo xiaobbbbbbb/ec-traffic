@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.ProxyHostDao">  
+    
+    <resultMap type="ProxyHost" id="ProxyHostResultMap">  
+		<id 		property="host" column="host"/>
+		<result 	property="port" column="port"/>
+		<result 	property="valid" column="valid"/>
+		<result 	property="lastReplyTime" column="last_reply_time"/>
+		 
+    </resultMap>
+    
+    <select id="findByPK"  resultType="ProxyHost" resultMap="ProxyHostResultMap">  
+        <![CDATA[ 
+        	SELECT host,port,valid,last_reply_time FROM proxy_host WHERE host = #{host}        	
+        ]]>   
+    </select>
+    
+    <select id="findOneByAttr" resultType="ProxyHost" resultMap="ProxyHostResultMap">  
+        <![CDATA[ 
+        	SELECT host,port,valid,last_reply_time FROM proxy_host WHERE `${fieldName}` = #{value} limit 1        	
+        ]]>
+    </select>
+    
+    <select id="findByAttr" resultType="ProxyHost" resultMap="ProxyHostResultMap">  
+        <![CDATA[ 
+        	SELECT host,port,valid,last_reply_time FROM proxy_host WHERE `${fieldName}` = #{value}        	
+        ]]>
+    </select>
+    
+    <select id="findOne" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="ProxyHost" resultMap="ProxyHostResultMap">  
+        <![CDATA[ 
+        	SELECT host,port,valid,last_reply_time FROM proxy_host WHERE ${uniqueWhereCond}        	
+        ]]>
+    </select>
+    
+    <select id="findMap" parameterType="com.ecarinfo.persist.criteria.Criteria" resultMap="ProxyHostResultMap">  
+        <![CDATA[ 
+		    SELECT host,port,valid,last_reply_time FROM proxy_host WHERE ${whereCond}
+        ]]>
+    </select>
+    
+    <select id="findAll" resultType="ProxyHost" resultMap="ProxyHostResultMap">  
+        <![CDATA[ 
+        	SELECT host,port,valid,last_reply_time FROM proxy_host        	
+        ]]>
+    </select>
+    
+    <select id="findList" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="ProxyHost" resultMap="ProxyHostResultMap">  
+        <![CDATA[ 
+      	 	SELECT host,port,valid,last_reply_time FROM proxy_host WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <select id="count" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[ 
+      	 	SELECT COUNT(host) FROM proxy_host WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <insert id="insert" parameterType="ProxyHost">
+    	<![CDATA[ 
+    		INSERT INTO proxy_host(host,port,valid,last_reply_time) VALUES (#{host},#{port},#{valid},#{lastReplyTime})    		
+        ]]> 
+        <selectKey resultType="String" order="AFTER" keyProperty="host">
+			SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+    </insert>
+	
+	<update id="updateWithCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+		UPDATE proxy_host SET ${updateField} WHERE ${whereCond}	
+		]]> 	
+	</update>
+	
+	<update id="update" parameterType="ProxyHost">
+		<![CDATA[ 
+			UPDATE proxy_host SET host = #{host},port = #{port},valid = #{valid},last_reply_time = #{lastReplyTime} WHERE host = #{host}
+		]]> 	
+	</update>
+	
+	<delete id="deleteEntity" parameterType="ProxyHost">
+		<![CDATA[ 
+    		DELETE FROM proxy_host WHERE host = #{host}    		
+        ]]> 
+	</delete>
+	
+	<delete id="deleteByPK" parameterType="String">
+		<![CDATA[ 
+    		DELETE FROM proxy_host WHERE host = #{host}    		
+        ]]> 
+	</delete>
+	
+	<delete id="delete" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+    		DELETE FROM proxy_host WHERE ${whereCond}     		
+        ]]> 
+	</delete>
+	
+</mapper>  

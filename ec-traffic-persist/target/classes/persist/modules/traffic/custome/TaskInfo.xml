@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.TaskInfoDao">  
+    
+    <select id="findInterfaceInfoByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+	SELECT 
+		ii.*
+	FROM 
+		 interface_carinfo ic 
+	LEFT JOIN 
+		interface_info ii on ic.interface_id=ii.id
+	LEFT JOIN 
+		customer_carinfo cc on cc.car_id=ic.car_id 
+	WHERE 
+	
+	${whereCond}
+        ]]>
+	</select>
+	
+	<select id="findInterCarInfoByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+	select 
+		DISTINCT ic.* ,ti.id task_id from interface_carinfo ic  
+	left JOIN 
+		task_info ti on ic.interface_id=ti.interface_id
+	left JOIN 
+		customer_carinfo  cc on cc.car_id =ic.car_id
+	WHERE 
+	
+	${whereCond}
+        ]]>
+	</select>
+	
+	<select id="findTaskCarsByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+	select 
+		DISTINCT ci.* 
+	from task_carinfo tc
+	LEFT join car_info ci 
+		on ci.id=tc.car_id
+	left join customer_carinfo cc on cc.car_id=tc.car_id 
+
+	where 
+	
+	${whereCond}
+        ]]>
+	</select>
+	
+	<select id="findCarInfoCountByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[
+	select 
+		count(DISTINCT ci.id) 
+	from task_carinfo tc
+	LEFT join car_info ci 
+		on ci.id=tc.car_id
+	left join customer_carinfo cc on cc.car_id=tc.car_id 
+	where 
+	
+	${whereCond}
+        ]]>
+	</select>
+	
+	<select id="findInterfaceCarsByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+	SELECT 
+		DISTINCT ic.car_id 
+	FROM interface_carinfo ic 
+	left join customer_carinfo cc on ic.car_id=cc.car_id 
+	
+	WHERE
+	
+	${whereCond}
+        ]]>
+	</select>
+</mapper>  

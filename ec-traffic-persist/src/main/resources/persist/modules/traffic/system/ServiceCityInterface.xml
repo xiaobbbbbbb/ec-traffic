@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.ServiceCityInterfaceDao">  
+    
+    <resultMap type="ServiceCityInterface" id="ServiceCityInterfaceResultMap">  
+		<id 		property="id" column="id"/>
+		<result 	property="cityId" column="city_id"/>
+		<result 	property="interfaceId" column="interface_id"/>
+		<result 	property="ctime" column="ctime"/>
+		<result 	property="cityPid" column="city_pid"/>
+		 
+    </resultMap>
+    
+    <select id="findByPK"  resultType="ServiceCityInterface" resultMap="ServiceCityInterfaceResultMap">  
+        <![CDATA[ 
+        	SELECT id,city_id,interface_id,ctime,city_pid FROM service_city_interface WHERE id = #{id}        	
+        ]]>   
+    </select>
+    
+    <select id="findOneByAttr" resultType="ServiceCityInterface" resultMap="ServiceCityInterfaceResultMap">  
+        <![CDATA[ 
+        	SELECT id,city_id,interface_id,ctime,city_pid FROM service_city_interface WHERE `${fieldName}` = #{value} limit 1        	
+        ]]>
+    </select>
+    
+    <select id="findByAttr" resultType="ServiceCityInterface" resultMap="ServiceCityInterfaceResultMap">  
+        <![CDATA[ 
+        	SELECT id,city_id,interface_id,ctime,city_pid FROM service_city_interface WHERE `${fieldName}` = #{value}        	
+        ]]>
+    </select>
+    
+    <select id="findOne" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="ServiceCityInterface" resultMap="ServiceCityInterfaceResultMap">  
+        <![CDATA[ 
+        	SELECT id,city_id,interface_id,ctime,city_pid FROM service_city_interface WHERE ${uniqueWhereCond}        	
+        ]]>
+    </select>
+    
+    <select id="findMap" parameterType="com.ecarinfo.persist.criteria.Criteria" resultMap="ServiceCityInterfaceResultMap">  
+        <![CDATA[ 
+		    SELECT id,city_id,interface_id,ctime,city_pid FROM service_city_interface WHERE ${whereCond}
+        ]]>
+    </select>
+    
+    <select id="findAll" resultType="ServiceCityInterface" resultMap="ServiceCityInterfaceResultMap">  
+        <![CDATA[ 
+        	SELECT id,city_id,interface_id,ctime,city_pid FROM service_city_interface        	
+        ]]>
+    </select>
+    
+    <select id="findList" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="ServiceCityInterface" resultMap="ServiceCityInterfaceResultMap">  
+        <![CDATA[ 
+      	 	SELECT id,city_id,interface_id,ctime,city_pid FROM service_city_interface WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <select id="count" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[ 
+      	 	SELECT COUNT(id) FROM service_city_interface WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <insert id="insert" parameterType="ServiceCityInterface">
+    	<![CDATA[ 
+    		INSERT INTO service_city_interface(city_id,interface_id,ctime,city_pid) VALUES (#{cityId},#{interfaceId},#{ctime},#{cityPid})    		
+        ]]> 
+        <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+    </insert>
+	
+	<update id="updateWithCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+		UPDATE service_city_interface SET ${updateField} WHERE ${whereCond}	
+		]]> 	
+	</update>
+	
+	<update id="update" parameterType="ServiceCityInterface">
+		<![CDATA[ 
+			UPDATE service_city_interface SET city_id = #{cityId},interface_id = #{interfaceId},ctime = #{ctime},city_pid = #{cityPid} WHERE id = #{id}
+		]]> 	
+	</update>
+	
+	<delete id="deleteEntity" parameterType="ServiceCityInterface">
+		<![CDATA[ 
+    		DELETE FROM service_city_interface WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="deleteByPK" parameterType="Integer">
+		<![CDATA[ 
+    		DELETE FROM service_city_interface WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="delete" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+    		DELETE FROM service_city_interface WHERE ${whereCond}     		
+        ]]> 
+	</delete>
+	
+</mapper>  

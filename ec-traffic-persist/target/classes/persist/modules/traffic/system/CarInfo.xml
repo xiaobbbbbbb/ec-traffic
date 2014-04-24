@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.CarInfoDao">  
+    
+    <resultMap type="CarInfo" id="CarInfoResultMap">  
+		<id 		property="id" column="id"/>
+		<result 	property="userName" column="user_name"/>
+		<result 	property="carNo" column="car_no"/>
+		<result 	property="carFrameNo" column="car_frame_no"/>
+		<result 	property="carEngineNo" column="car_engine_no"/>
+		<result 	property="carRegistNo" column="car_regist_no"/>
+		<result 	property="trafficNums" column="traffic_nums"/>
+		<result 	property="trafficObjects" column="traffic_objects"/>
+		<result 	property="lastResponseDate" column="last_response_date"/>
+		<result 	property="trafficTimes" column="traffic_times"/>
+		<result 	property="trafficIds" column="traffic_ids"/>
+		<result 	property="ctime" column="ctime"/>
+		<result 	property="utime" column="utime"/>
+		<result 	property="isValid" column="is_valid"/>
+		<result 	property="interfaceId" column="interface_id"/>
+		 
+    </resultMap>
+    
+    <select id="findByPK"  resultType="CarInfo" resultMap="CarInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,user_name,car_no,car_frame_no,car_engine_no,car_regist_no,traffic_nums,traffic_objects,last_response_date,traffic_times,traffic_ids,ctime,utime,is_valid,interface_id FROM car_info WHERE id = #{id}        	
+        ]]>   
+    </select>
+    
+    <select id="findOneByAttr" resultType="CarInfo" resultMap="CarInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,user_name,car_no,car_frame_no,car_engine_no,car_regist_no,traffic_nums,traffic_objects,last_response_date,traffic_times,traffic_ids,ctime,utime,is_valid,interface_id FROM car_info WHERE `${fieldName}` = #{value} limit 1        	
+        ]]>
+    </select>
+    
+    <select id="findByAttr" resultType="CarInfo" resultMap="CarInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,user_name,car_no,car_frame_no,car_engine_no,car_regist_no,traffic_nums,traffic_objects,last_response_date,traffic_times,traffic_ids,ctime,utime,is_valid,interface_id FROM car_info WHERE `${fieldName}` = #{value}        	
+        ]]>
+    </select>
+    
+    <select id="findOne" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="CarInfo" resultMap="CarInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,user_name,car_no,car_frame_no,car_engine_no,car_regist_no,traffic_nums,traffic_objects,last_response_date,traffic_times,traffic_ids,ctime,utime,is_valid,interface_id FROM car_info WHERE ${uniqueWhereCond}        	
+        ]]>
+    </select>
+    
+    <select id="findMap" parameterType="com.ecarinfo.persist.criteria.Criteria" resultMap="CarInfoResultMap">  
+        <![CDATA[ 
+		    SELECT id,user_name,car_no,car_frame_no,car_engine_no,car_regist_no,traffic_nums,traffic_objects,last_response_date,traffic_times,traffic_ids,ctime,utime,is_valid,interface_id FROM car_info WHERE ${whereCond}
+        ]]>
+    </select>
+    
+    <select id="findAll" resultType="CarInfo" resultMap="CarInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,user_name,car_no,car_frame_no,car_engine_no,car_regist_no,traffic_nums,traffic_objects,last_response_date,traffic_times,traffic_ids,ctime,utime,is_valid,interface_id FROM car_info        	
+        ]]>
+    </select>
+    
+    <select id="findList" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="CarInfo" resultMap="CarInfoResultMap">  
+        <![CDATA[ 
+      	 	SELECT id,user_name,car_no,car_frame_no,car_engine_no,car_regist_no,traffic_nums,traffic_objects,last_response_date,traffic_times,traffic_ids,ctime,utime,is_valid,interface_id FROM car_info WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <select id="count" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[ 
+      	 	SELECT COUNT(id) FROM car_info WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <insert id="insert" parameterType="CarInfo">
+    	<![CDATA[ 
+    		INSERT INTO car_info(user_name,car_no,car_frame_no,car_engine_no,car_regist_no,traffic_nums,traffic_objects,last_response_date,traffic_times,traffic_ids,ctime,utime,is_valid,interface_id) VALUES (#{userName},#{carNo},#{carFrameNo},#{carEngineNo},#{carRegistNo},#{trafficNums},#{trafficObjects},#{lastResponseDate},#{trafficTimes},#{trafficIds},#{ctime},#{utime},#{isValid},#{interfaceId})    		
+        ]]> 
+        <selectKey resultType="Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+    </insert>
+	
+	<update id="updateWithCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+		UPDATE car_info SET ${updateField} WHERE ${whereCond}	
+		]]> 	
+	</update>
+	
+	<update id="update" parameterType="CarInfo">
+		<![CDATA[ 
+			UPDATE car_info SET user_name = #{userName},car_no = #{carNo},car_frame_no = #{carFrameNo},car_engine_no = #{carEngineNo},car_regist_no = #{carRegistNo},traffic_nums = #{trafficNums},traffic_objects = #{trafficObjects},last_response_date = #{lastResponseDate},traffic_times = #{trafficTimes},traffic_ids = #{trafficIds},ctime = #{ctime},utime = #{utime},is_valid = #{isValid},interface_id = #{interfaceId} WHERE id = #{id}
+		]]> 	
+	</update>
+	
+	<delete id="deleteEntity" parameterType="CarInfo">
+		<![CDATA[ 
+    		DELETE FROM car_info WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="deleteByPK" parameterType="Long">
+		<![CDATA[ 
+    		DELETE FROM car_info WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="delete" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+    		DELETE FROM car_info WHERE ${whereCond}     		
+        ]]> 
+	</delete>
+	
+</mapper>  

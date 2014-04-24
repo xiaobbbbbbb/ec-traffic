@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.InterfaceInfoDao">  
+    
+    <select id="findInterfaceInfoByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+         
+	SELECT 
+		ii.*,sc.`name` as city_name ,pi.`name` as city_pname,sci.city_id ,sci.city_pid
+	From
+		service_city_interface as sci
+	LEFT JOIN 
+		interface_info as ii on ii.id=sci.interface_id 
+	LEFT JOIN 
+		service_city as sc on sc.id=sci.city_id
+	left join 
+    province_info as pi on pi.id=sci.city_pid
+	
+	WHERE 
+	
+	${whereCond}	
+        ]]>
+	</select>
+	
+	<select id="findInterfaceInfoCountByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[
+         
+	SELECT 
+		count(sci.id)
+	From
+		service_city_interface as sci
+	LEFT JOIN 
+		interface_info as ii on ii.id=sci.interface_id 
+	LEFT JOIN 
+		service_city as sc on sc.id=sci.city_id
+	left join 
+    province_info as pi on pi.id=sci.city_pid
+	
+	WHERE 
+	
+	${whereCond}	
+        ]]>
+	</select>
+	
+	<select id="findCarNobindByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+    
+ select ci.* ,group_concat(distinct cui.`name`) as name ,group_concat(distinct CONVERT(cui.id,CHAR)  separator '|' ) as customer_id,cc.is_expired,cc.is_allowchange
+
+	from customer_carinfo cc 
+
+	left JOIN car_info ci on cc.car_id=ci.id
+
+	LEFT JOIN customer_info as cui on cc.customer_id=cui.id
+
+ 	Where 
+	${whereCond}
+	
+        ]]>
+	</select>
+	
+	<select id="findCarInfoCountByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[
+   select count(car_no) from (select ci.* ,group_concat(distinct cui.`name`) as name ,group_concat(CONVERT(cui.id,CHAR) ) as customer_id,cc.is_expired,cc.is_allowchange
+
+	from customer_carinfo cc 
+
+	left JOIN car_info ci on cc.car_id=ci.id
+
+	LEFT JOIN customer_info as cui on cc.customer_id=cui.id
+ 	Where 
+	${whereCond}
+	) a
+	
+        ]]>
+	</select>
+	
+	
+	
+</mapper>  

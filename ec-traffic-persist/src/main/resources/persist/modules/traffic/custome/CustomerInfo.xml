@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.CustomerInfoDao">  
+
+    <select id="findTree" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+         
+	Select * from (SELECT
+		sc.id,sc.name ,sc.parent_id 
+	FROM 
+		service_city sc  
+	UNION ALL
+		SELECT pi.id,pi.`name`,pi.is_leaf FROM province_info pi) t 
+	
+	WHERE 
+	
+	${whereCond}
+        ]]>
+	</select>
+	
+	<select id="findCarInfoCountByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[
+         
+	SELECT
+		COUNT(*)
+	FROM
+		customer_carinfo AS cc
+	LEFT JOIN 
+		car_info as car on car.id=cc.car_id 
+	LEFT JOIN 
+		customer_info as cus on cc.customer_id=cus.id
+	
+	WHERE 
+	
+	${whereCond}
+	
+        ]]>
+	</select>
+	
+	<select id="findById" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+         
+	select 
+	ci.*,sc.`name` city_name,pi.`name` city_pname  
+	from customer_info ci 
+	LEFT join service_city sc on sc.id=ci.city_id 
+	left join province_info pi on pi.id=ci.city_pid 
+	where 
+	
+	${whereCond}
+	
+        ]]>
+	</select>
+    
+</mapper>  

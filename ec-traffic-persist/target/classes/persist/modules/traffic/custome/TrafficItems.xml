@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.TrafficItemsDao">  
+    <select id="findTrafficItemsByCustomer" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+         
+	SELECT 
+		ti.* ,ci.car_no,ci.user_name,ci.car_frame_no
+	FROM 
+		traffic_items ti
+	LEFT JOIN	car_info ci 
+	ON ti.car_id=ci.id
+	WHERE 
+	
+	${whereCond}
+        ]]>
+	</select>
+  
+  <select id="findTrafficItemsCountByCustomer" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[
+         
+	SELECT 
+		count(ti.id)
+	FROM 
+		traffic_items as ti
+	LEFT JOIN	car_info ci 
+	ON ti.car_id=ci.id
+	WHERE 
+	
+	${whereCond}
+        ]]>
+	</select>
+	<select id="findTrafficItemsByCar" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+         
+	SELECT 
+		ti.* ,ci.car_no,ci.user_name,ci.car_frameNo
+	FROM 
+		traffic_items ti
+	LEFT JOIN 
+		car_info ci 
+	ON ti.car_id=ci.id
+
+	WHERE 
+	
+	${whereCond}
+        ]]>
+	</select>
+  
+  <select id="findTrafficItemsCountByCar" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[
+         
+	SELECT 
+		count(ti.id)
+	FROM 
+		traffic_items as ti
+	
+	WHERE 
+	
+	${whereCond}
+        ]]>
+	</select>
+    
+</mapper>  

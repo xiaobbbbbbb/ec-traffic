@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.ServiceCityDao">  
+    
+    <select id="findCityInfoByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+         
+		select 
+			sc.*,pi.`name` as parent_name 
+		from 
+			service_city as sc 
+		LEFT JOIN
+			province_info as pi 
+		ON 
+			sc.parent_id=pi.id
+		
+		WHERE 
+		
+		${whereCond}
+        ]]>
+	</select>
+	
+	<select id="findCityInfoCountByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[
+         
+		SELECT
+			COUNT(*)
+		FROM
+			service_city AS sc
+		
+		WHERE 
+		
+		${whereCond}
+	
+        ]]>
+	</select>
+	
+</mapper>  

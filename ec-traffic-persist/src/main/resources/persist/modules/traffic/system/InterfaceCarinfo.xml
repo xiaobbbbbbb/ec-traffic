@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.InterfaceCarinfoDao">  
+    
+    <resultMap type="InterfaceCarinfo" id="InterfaceCarinfoResultMap">  
+		<id 		property="id" column="id"/>
+		<result 	property="carId" column="car_id"/>
+		<result 	property="interfaceId" column="interface_id"/>
+		<result 	property="referenceCount" column="reference_count"/>
+		<result 	property="lastRequestDate" column="last_request_date"/>
+		<result 	property="ctime" column="ctime"/>
+		<result 	property="customerId" column="customer_id"/>
+		 
+    </resultMap>
+    
+    <select id="findByPK"  resultType="InterfaceCarinfo" resultMap="InterfaceCarinfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,car_id,interface_id,reference_count,last_request_date,ctime,customer_id FROM interface_carinfo WHERE id = #{id}        	
+        ]]>   
+    </select>
+    
+    <select id="findOneByAttr" resultType="InterfaceCarinfo" resultMap="InterfaceCarinfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,car_id,interface_id,reference_count,last_request_date,ctime,customer_id FROM interface_carinfo WHERE `${fieldName}` = #{value} limit 1        	
+        ]]>
+    </select>
+    
+    <select id="findByAttr" resultType="InterfaceCarinfo" resultMap="InterfaceCarinfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,car_id,interface_id,reference_count,last_request_date,ctime,customer_id FROM interface_carinfo WHERE `${fieldName}` = #{value}        	
+        ]]>
+    </select>
+    
+    <select id="findOne" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="InterfaceCarinfo" resultMap="InterfaceCarinfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,car_id,interface_id,reference_count,last_request_date,ctime,customer_id FROM interface_carinfo WHERE ${uniqueWhereCond}        	
+        ]]>
+    </select>
+    
+    <select id="findMap" parameterType="com.ecarinfo.persist.criteria.Criteria" resultMap="InterfaceCarinfoResultMap">  
+        <![CDATA[ 
+		    SELECT id,car_id,interface_id,reference_count,last_request_date,ctime,customer_id FROM interface_carinfo WHERE ${whereCond}
+        ]]>
+    </select>
+    
+    <select id="findAll" resultType="InterfaceCarinfo" resultMap="InterfaceCarinfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,car_id,interface_id,reference_count,last_request_date,ctime,customer_id FROM interface_carinfo        	
+        ]]>
+    </select>
+    
+    <select id="findList" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="InterfaceCarinfo" resultMap="InterfaceCarinfoResultMap">  
+        <![CDATA[ 
+      	 	SELECT id,car_id,interface_id,reference_count,last_request_date,ctime,customer_id FROM interface_carinfo WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <select id="count" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[ 
+      	 	SELECT COUNT(id) FROM interface_carinfo WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <insert id="insert" parameterType="InterfaceCarinfo">
+    	<![CDATA[ 
+    		INSERT INTO interface_carinfo(car_id,interface_id,reference_count,last_request_date,ctime,customer_id) VALUES (#{carId},#{interfaceId},#{referenceCount},#{lastRequestDate},#{ctime},#{customerId})    		
+        ]]> 
+        <selectKey resultType="Long" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+    </insert>
+	
+	<update id="updateWithCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+		UPDATE interface_carinfo SET ${updateField} WHERE ${whereCond}	
+		]]> 	
+	</update>
+	
+	<update id="update" parameterType="InterfaceCarinfo">
+		<![CDATA[ 
+			UPDATE interface_carinfo SET car_id = #{carId},interface_id = #{interfaceId},reference_count = #{referenceCount},last_request_date = #{lastRequestDate},ctime = #{ctime},customer_id = #{customerId} WHERE id = #{id}
+		]]> 	
+	</update>
+	
+	<delete id="deleteEntity" parameterType="InterfaceCarinfo">
+		<![CDATA[ 
+    		DELETE FROM interface_carinfo WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="deleteByPK" parameterType="Long">
+		<![CDATA[ 
+    		DELETE FROM interface_carinfo WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="delete" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+    		DELETE FROM interface_carinfo WHERE ${whereCond}     		
+        ]]> 
+	</delete>
+	
+</mapper>  

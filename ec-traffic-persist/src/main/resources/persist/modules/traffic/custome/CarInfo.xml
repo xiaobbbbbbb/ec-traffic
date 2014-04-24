@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.CarInfoDao">  
+    
+    <select id="findCarInfoByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="hashmap">  
+        <![CDATA[
+         
+	SELECT 
+		car.*,cus.`name` ,cc.customer_id,cc.is_expired,cc.is_allowchange
+	FROM 
+		customer_carinfo as cc
+	LEFT JOIN 
+		car_info as car on car.id=cc.car_id 
+	LEFT JOIN 
+		customer_info as cus on cc.customer_id=cus.id
+	
+	WHERE 
+	
+	${whereCond}
+        ]]>
+	</select>
+	
+	<select id="findCarInfoCountByCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[
+         
+	SELECT
+		COUNT(*)
+	FROM
+		customer_carinfo AS cc
+	LEFT JOIN 
+		car_info as car on car.id=cc.car_id 
+	LEFT JOIN 
+		customer_info as cus on cc.customer_id=cus.id
+	
+	WHERE 
+	
+	${whereCond}
+	
+        ]]>
+	</select>
+	
+</mapper>  

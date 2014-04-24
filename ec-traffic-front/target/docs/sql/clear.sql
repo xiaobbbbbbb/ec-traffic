@@ -1,0 +1,20 @@
+truncate table car_info;
+TRUNCATE table customer_carinfo;
+TRUNCATE table customer_info;
+TRUNCATE table customer_carinfo_log;
+TRUNCATE table interface_carinfo;
+TRUNCATE table interface_info;
+TRUNCATE table service_city_interface;
+TRUNCATE table service_city;
+TRUNCATE table task_carinfo;
+TRUNCATE table task_info;
+TRUNCATE table traffic_code_dict;
+TRUNCATE table traffic_items;
+TRUNCATE table system_log;
+-- 权限相关
+-- truncate table ral_group;
+-- truncate table ral_org;
+-- truncate table ral_resource;
+-- truncate table ral_role_resources;
+-- truncate table ral_user;
+-- truncate table ral_user_role;

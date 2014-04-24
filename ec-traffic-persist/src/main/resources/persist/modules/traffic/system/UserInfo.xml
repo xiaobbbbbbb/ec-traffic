@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.UserInfoDao">  
+    
+    <resultMap type="UserInfo" id="UserInfoResultMap">  
+		<id 		property="id" column="id"/>
+		<result 	property="displayName" column="display_name"/>
+		<result 	property="loginName" column="login_name"/>
+		<result 	property="password" column="password"/>
+		<result 	property="email" column="email"/>
+		<result 	property="isAdmin" column="is_admin"/>
+		<result 	property="isValid" column="is_valid"/>
+		<result 	property="lastLoginTime" column="last_login_time"/>
+		<result 	property="departmentId" column="department_id"/>
+		<result 	property="opName" column="op_name"/>
+		<result 	property="ctime" column="ctime"/>
+		<result 	property="utime" column="utime"/>
+		 
+    </resultMap>
+    
+    <select id="findByPK"  resultType="UserInfo" resultMap="UserInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,display_name,login_name,password,email,is_admin,is_valid,last_login_time,department_id,op_name,ctime,utime FROM user_info WHERE id = #{id}        	
+        ]]>   
+    </select>
+    
+    <select id="findOneByAttr" resultType="UserInfo" resultMap="UserInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,display_name,login_name,password,email,is_admin,is_valid,last_login_time,department_id,op_name,ctime,utime FROM user_info WHERE `${fieldName}` = #{value} limit 1        	
+        ]]>
+    </select>
+    
+    <select id="findByAttr" resultType="UserInfo" resultMap="UserInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,display_name,login_name,password,email,is_admin,is_valid,last_login_time,department_id,op_name,ctime,utime FROM user_info WHERE `${fieldName}` = #{value}        	
+        ]]>
+    </select>
+    
+    <select id="findOne" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="UserInfo" resultMap="UserInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,display_name,login_name,password,email,is_admin,is_valid,last_login_time,department_id,op_name,ctime,utime FROM user_info WHERE ${uniqueWhereCond}        	
+        ]]>
+    </select>
+    
+    <select id="findMap" parameterType="com.ecarinfo.persist.criteria.Criteria" resultMap="UserInfoResultMap">  
+        <![CDATA[ 
+		    SELECT id,display_name,login_name,password,email,is_admin,is_valid,last_login_time,department_id,op_name,ctime,utime FROM user_info WHERE ${whereCond}
+        ]]>
+    </select>
+    
+    <select id="findAll" resultType="UserInfo" resultMap="UserInfoResultMap">  
+        <![CDATA[ 
+        	SELECT id,display_name,login_name,password,email,is_admin,is_valid,last_login_time,department_id,op_name,ctime,utime FROM user_info        	
+        ]]>
+    </select>
+    
+    <select id="findList" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="UserInfo" resultMap="UserInfoResultMap">  
+        <![CDATA[ 
+      	 	SELECT id,display_name,login_name,password,email,is_admin,is_valid,last_login_time,department_id,op_name,ctime,utime FROM user_info WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <select id="count" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[ 
+      	 	SELECT COUNT(id) FROM user_info WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <insert id="insert" parameterType="UserInfo">
+    	<![CDATA[ 
+    		INSERT INTO user_info(display_name,login_name,password,email,is_admin,is_valid,last_login_time,department_id,op_name,ctime,utime) VALUES (#{displayName},#{loginName},#{password},#{email},#{isAdmin},#{isValid},#{lastLoginTime},#{departmentId},#{opName},#{ctime},#{utime})    		
+        ]]> 
+        <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+    </insert>
+	
+	<update id="updateWithCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+		UPDATE user_info SET ${updateField} WHERE ${whereCond}	
+		]]> 	
+	</update>
+	
+	<update id="update" parameterType="UserInfo">
+		<![CDATA[ 
+			UPDATE user_info SET display_name = #{displayName},login_name = #{loginName},password = #{password},email = #{email},is_admin = #{isAdmin},is_valid = #{isValid},last_login_time = #{lastLoginTime},department_id = #{departmentId},op_name = #{opName},ctime = #{ctime},utime = #{utime} WHERE id = #{id}
+		]]> 	
+	</update>
+	
+	<delete id="deleteEntity" parameterType="UserInfo">
+		<![CDATA[ 
+    		DELETE FROM user_info WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="deleteByPK" parameterType="Integer">
+		<![CDATA[ 
+    		DELETE FROM user_info WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="delete" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+    		DELETE FROM user_info WHERE ${whereCond}     		
+        ]]> 
+	</delete>
+	
+</mapper>  

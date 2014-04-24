@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        ">
+ 
+    <!-- Application name -->
+    <dubbo:application name="ec-traffic-job"  />
+ 
+    <!-- registry address, used for service to register itself -->
+    <dubbo:registry address="zookeeper://192.168.1.241:2181" client="zkclient" check="false" />
+ 
+
+    <dubbo:reference id="trafficRpcForMessageCenterFacade" interface="com.ecarinfo.fivesaas.rpc.api.TrafficRpcForMessageCenterFacade" check="false"/>
+    
+</beans>

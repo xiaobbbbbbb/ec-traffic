@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"  
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="com.ecarinfo.traffic.dao.ServiceCityDao">  
+    
+    <resultMap type="ServiceCity" id="ServiceCityResultMap">  
+		<id 		property="id" column="id"/>
+		<result 	property="code" column="code"/>
+		<result 	property="name" column="name"/>
+		<result 	property="letter" column="letter"/>
+		<result 	property="parentId" column="parent_id"/>
+		<result 	property="isHot" column="is_hot"/>
+		<result 	property="carFrameNo" column="car_frame_no"/>
+		<result 	property="carEngineNo" column="car_engine_no"/>
+		<result 	property="carRegisterNo" column="car_register_no"/>
+		<result 	property="ctime" column="ctime"/>
+		<result 	property="utime" column="utime"/>
+		 
+    </resultMap>
+    
+    <select id="findByPK"  resultType="ServiceCity" resultMap="ServiceCityResultMap">  
+        <![CDATA[ 
+        	SELECT id,code,name,letter,parent_id,is_hot,car_frame_no,car_engine_no,car_register_no,ctime,utime FROM service_city WHERE id = #{id}        	
+        ]]>   
+    </select>
+    
+    <select id="findOneByAttr" resultType="ServiceCity" resultMap="ServiceCityResultMap">  
+        <![CDATA[ 
+        	SELECT id,code,name,letter,parent_id,is_hot,car_frame_no,car_engine_no,car_register_no,ctime,utime FROM service_city WHERE `${fieldName}` = #{value} limit 1        	
+        ]]>
+    </select>
+    
+    <select id="findByAttr" resultType="ServiceCity" resultMap="ServiceCityResultMap">  
+        <![CDATA[ 
+        	SELECT id,code,name,letter,parent_id,is_hot,car_frame_no,car_engine_no,car_register_no,ctime,utime FROM service_city WHERE `${fieldName}` = #{value}        	
+        ]]>
+    </select>
+    
+    <select id="findOne" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="ServiceCity" resultMap="ServiceCityResultMap">  
+        <![CDATA[ 
+        	SELECT id,code,name,letter,parent_id,is_hot,car_frame_no,car_engine_no,car_register_no,ctime,utime FROM service_city WHERE ${uniqueWhereCond}        	
+        ]]>
+    </select>
+    
+    <select id="findMap" parameterType="com.ecarinfo.persist.criteria.Criteria" resultMap="ServiceCityResultMap">  
+        <![CDATA[ 
+		    SELECT id,code,name,letter,parent_id,is_hot,car_frame_no,car_engine_no,car_register_no,ctime,utime FROM service_city WHERE ${whereCond}
+        ]]>
+    </select>
+    
+    <select id="findAll" resultType="ServiceCity" resultMap="ServiceCityResultMap">  
+        <![CDATA[ 
+        	SELECT id,code,name,letter,parent_id,is_hot,car_frame_no,car_engine_no,car_register_no,ctime,utime FROM service_city        	
+        ]]>
+    </select>
+    
+    <select id="findList" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="ServiceCity" resultMap="ServiceCityResultMap">  
+        <![CDATA[ 
+      	 	SELECT id,code,name,letter,parent_id,is_hot,car_frame_no,car_engine_no,car_register_no,ctime,utime FROM service_city WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <select id="count" parameterType="com.ecarinfo.persist.criteria.Criteria" resultType="long">  
+        <![CDATA[ 
+      	 	SELECT COUNT(id) FROM service_city WHERE ${whereCond}      	 	
+        ]]>
+    </select>
+    
+    <insert id="insert" parameterType="ServiceCity">
+    	<![CDATA[ 
+    		INSERT INTO service_city(code,name,letter,parent_id,is_hot,car_frame_no,car_engine_no,car_register_no,ctime,utime) VALUES (#{code},#{name},#{letter},#{parentId},#{isHot},#{carFrameNo},#{carEngineNo},#{carRegisterNo},#{ctime},#{utime})    		
+        ]]> 
+        <selectKey resultType="Integer" order="AFTER" keyProperty="id">
+			SELECT LAST_INSERT_ID() AS ID    
+		</selectKey>
+    </insert>
+	
+	<update id="updateWithCriteria" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+		UPDATE service_city SET ${updateField} WHERE ${whereCond}	
+		]]> 	
+	</update>
+	
+	<update id="update" parameterType="ServiceCity">
+		<![CDATA[ 
+			UPDATE service_city SET code = #{code},name = #{name},letter = #{letter},parent_id = #{parentId},is_hot = #{isHot},car_frame_no = #{carFrameNo},car_engine_no = #{carEngineNo},car_register_no = #{carRegisterNo},ctime = #{ctime},utime = #{utime} WHERE id = #{id}
+		]]> 	
+	</update>
+	
+	<delete id="deleteEntity" parameterType="ServiceCity">
+		<![CDATA[ 
+    		DELETE FROM service_city WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="deleteByPK" parameterType="Integer">
+		<![CDATA[ 
+    		DELETE FROM service_city WHERE id = #{id}    		
+        ]]> 
+	</delete>
+	
+	<delete id="delete" parameterType="com.ecarinfo.persist.criteria.Criteria">
+		<![CDATA[ 
+    		DELETE FROM service_city WHERE ${whereCond}     		
+        ]]> 
+	</delete>
+	
+</mapper>  
